@@ -1,0 +1,49 @@
+<div class="container-fluid">
+    <div class="row">
+      <h2>
+        <dt>
+      CQ-Pattern 2: Which individuals are of type [CE]?
+        </dt>      
+      </h2>
+  </div>
+  <div class="row top-buffer"><a>
+  </a></div>
+      <div class="row">
+        <div class="col-sm">
+            <label> ClassExpression </label> 
+           
+            <ngx-select-dropdown [options]="CE1" [config]="config" [(ngModel)]="DD1_sel" (change)="getInfo_DD1_sel()" (click)="populateDD1()">      
+            </ngx-select-dropdown>            
+            Explanation: {{DD1_sel_Info}}            
+            <div class="top-buffer">Insert custom prefix here:
+              <input #box4 (keyup)="CustomPrefix1(box4.value)">
+              <br> Insert custom concept below. Confirm with [Enter].<br>
+              <input #box1 (keyup.enter)="onEnterCustomConcept1(box1.value)">
+            </div>
+        </div>
+      </div>
+      
+   
+      <div class="row top-buffer">   
+        <div class="col-sm">    
+          <button type="button" class="btn btn-success btn-block" (click)=onSubmit()>Submit</button>
+          <button type="button" class="btn btn-default btn-block" (click)="clear()">Clear Dropdowns</button>
+        </div> 
+      </div>
+    </div>
+  
+   
+    <div class="row top-buffer"> 
+      <table class="table">        
+          <thead>
+              <tr>
+                  <th scope="col">Class Expression</th>             
+              </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of tableRows" class="rowhighlight">
+              <td>{{row.DD1}}</td>              
+            </tr>
+          </tbody>        
+      </table>
+    </div>

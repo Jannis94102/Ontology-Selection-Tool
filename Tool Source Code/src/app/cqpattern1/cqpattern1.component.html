@@ -1,0 +1,81 @@
+<div class="container-fluid">
+  <div class="row">
+    <h2>
+      <dt>
+    CQ-Pattern 1: Which [CE1] [OPE] [CE2]?
+      </dt>      
+    </h2>
+</div>
+<div class="row top-buffer"><a>
+  <input type="checkbox" [(ngModel)]="restriction_bool">Activate Domain / Range Restrictions
+</a></div>
+    <div class="row">
+      <div class="col-sm">
+          <label> ClassExpression 1 </label> 
+         
+          <ngx-select-dropdown [options]="CE1" [config]="config" [(ngModel)]="DD1_sel" (change)="getInfo_DD1_sel()" (click)="populateDD1()">      
+          </ngx-select-dropdown>            
+          Explanation: {{DD1_sel_Info}}            
+          <div class="top-buffer">Insert custom prefix here:
+            <input #box4 (keyup)="CustomPrefix1(box4.value)">
+            <br> Insert custom concept below. Confirm with [Enter].<br>
+            <input #box1 (keyup.enter)="onEnterCustomConcept1(box1.value)">
+          </div>
+      </div>
+      <div class="col-sm">
+          <label> Object Property Expression </label> 
+          <ngx-select-dropdown [options]="ObjectProperties" [config]="config" [(ngModel)]="DD2_sel" (click)="populateDD2()" (change)="getInfo_DD2_sel()">       
+            </ngx-select-dropdown>
+            Explanation: {{DD2_sel_Info}}
+            <div class="top-buffer">Insert custom prefix here:
+              <input #box5 (keyup)="CustomPrefix2(box5.value)">
+              <br> Insert custom concept below. Confirm with [Enter].<br>
+              <input #box2 (keyup.enter)="onEnterCustomConcept2(box2.value)">
+            </div>
+      </div>
+      <div class="col-sm">
+          <label> ClassExpression 2 </label>
+          <ngx-select-dropdown [options]="CE2" [config]="config" [(ngModel)]="DD3_sel" (click)="populateDD3()" (change)="getInfo_DD3_sel()">         
+            </ngx-select-dropdown>
+            Explanation: {{DD3_sel_Info}}
+            <div class="top-buffer">Insert custom prefix here:
+              <input #box6 (keyup)="CustomPrefix3(box6.value)">
+              <br> Insert custom concept below. Confirm with [Enter].<br>
+              <input #box3 (keyup.enter)="onEnterCustomConcept3(box3.value)">
+            </div>
+      </div>
+    </div>
+ 
+    <div class="row top-buffer">   
+      <div class="col-sm">    
+        <button type="button" class="btn btn-success btn-block" (click)=onSubmit()>Submit</button>
+        <button type="button" class="btn btn-default btn-block" (click)="clear()">Clear Dropdowns</button>
+      </div> 
+    </div>
+  </div>
+
+ 
+  <div class="row top-buffer"> 
+    <table class="table">        
+        <thead>
+            <tr>
+                <th scope="col">Class Expression 1</th>
+                <th scope="col">Object Property</th>
+                <th scope="col">Class Expression 2</th>              
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of tableRows" class="rowhighlight">
+            <td>{{row.DD1}}</td>
+            <td>{{row.DD2}}</td>
+            <td>{{row.DD3}}</td>
+          </tr>
+        </tbody>        
+    </table>
+  </div>
+
+ 
+
+
+
+  

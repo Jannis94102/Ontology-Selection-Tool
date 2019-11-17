@@ -1,0 +1,106 @@
+import { Component, OnInit } from '@angular/core';
+import { RdfDataService } from '../services/rdf-data.service';
+
+@Component({
+  selector: 'app-cqpattern3',
+  templateUrl: './cqpattern3.component.html',
+  styleUrls: ['./cqpattern3.component.scss']
+})
+export class CQPattern3Component implements OnInit {
+  CE1:Array<Object> = [];  
+  DataProperties:Array<Object> = [];
+  DD1_sel:string;
+  DD1_sel_Info:string;
+  DD2_sel:string;
+  DD2_sel_Info:string;
+  DD3_sel:string;
+  restriction_bool:boolean;
+  tableRows = [];
+  custom_prefix:string = '';
+  existing_cq_instances:Array<any> = []
+  add_as_class:string='';
+  add_as_dp:string='';
+
+  constructor(private dataService: RdfDataService) { }
+
+  ngOnInit() {
+    this.dataService.getNamespaces() 
+  }
+  populateDD1(){  
+    if (this.restriction_bool == true && this.DD2_sel!=""){      
+    this.dataService.getCE1WithRDFSRestriction(this.DD2_sel).subscribe((data:any) => {this.CE1 = data;});
+    }
+    else{
+    this.dataService.getCE1WithoutRestriction().subscribe((data:any) => {this.CE1 = data})};
+}
+ 
+  getInfo_DD1_sel(){
+    this.DD1_sel_Info=""
+    this.dataService.getInfo_DD1_sel(this.DD1_sel).subscribe((data:any) => {this.DD1_sel_Info = data;}) 
+  }
+  populateDD2(){
+    
+    setTimeout(() => { 
+    if (this.restriction_bool == true && this.DD1_sel!=""){
+    (this.dataService.getDataPropertiesWithRDFSRestriction(this.DD1_sel).subscribe((data: any) => {this.DataProperties = data;})) 
+    }
+    else {
+      this.dataService.getDataPropertiesWithoutRestriction().subscribe((data: any) => {this.DataProperties = data;})
+      }
+    }, 1000); 
+  }
+  getInfo_DD2_sel(){
+    this.DD2_sel_Info=""
+    this.dataService.getInfo_DD2_sel(this.DD2_sel).subscribe((data:any) => {this.DD2_sel_Info = data;})
+  }
+  clear(){
+    this.DD1_sel="",
+    this.DD2_sel="",    
+    this.DD1_sel_Info="",
+    this.DD2_sel_Info=""
+    
+  }
+  CustomPrefix1(value:string){
+    this.DD1_sel = value
+    this.custom_prefix = value  
+  }
+  CustomPrefix2(value:string){
+  this.DD2_sel = value
+  this.custom_prefix = value
+  }
+ 
+  onEnterCustomConcept1(value:string){
+  this.DD1_sel = this.DD1_sel.concat(':' + value)
+  this.dataService.addCustomPrefix(this.custom_prefix)
+  this.DD1_sel_Info=""
+  this.add_as_class = this.DD1_sel.concat(" rdf:type owl:Class .")
+  }
+  onEnterCustomConcept2(value:string){
+  this.DD2_sel = this.DD2_sel.concat(':' + value)  
+  this.dataService.addCustomPrefix(this.custom_prefix)
+  this.DD2_sel_Info=""
+  this.add_as_dp = this.DD2_sel.concat(" rdf:type owl:DatatypeProperty .")
+  }  
+  onSubmit() { 
+    this.dataService.getCQCounter(3).subscribe((data:any) => {this.existing_cq_instances = data;});
+    setTimeout(() => {
+  this.tableRows.push({
+  DD1: this.DD1_sel,
+  DD2: this.DD2_sel
+  })
+  this.dataService.insert_data_CQ3(this.DD1_sel,this.DD2_sel,(this.existing_cq_instances.length) + 1,this.add_as_class,this.add_as_dp).subscribe(data => {data});
+  this.DD1_sel="", 
+  this.DD2_sel="",
+  this.DD1_sel_Info="",
+  this.DD2_sel_Info=""
+}, 2000); 
+  }
+
+  config = {
+     search:true, //true/false for the search functionlity defaults to false,
+     placeholder:'Select', // text to be displayed when no item is selected defaults to Select,
+     noResultsFound: 'No results found!', // text to be displayed when no items are found while searching
+     searchPlaceholder:'Search', // label thats displayed in search input,
+     }
+         
+}

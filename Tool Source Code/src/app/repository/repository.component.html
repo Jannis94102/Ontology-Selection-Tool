@@ -1,0 +1,246 @@
+<div class="container-fluid">
+    <div class="row">
+        <h2>
+          <dt>
+        GraphDB-Repository Configuration
+          </dt>      
+        </h2>
+    </div>
+    <hr>
+    <hr>
+    <div class="row top-buffer"> 
+        <h4>
+            <dt>
+          GraphDB-Repository: Activate Repository
+            </dt>      
+          </h4>
+        </div>
+          <div class="row"> 
+      <div class="col-sm"> Choose Repository from GraphDB:        
+        <select [(ngModel)]="selectedRep" (change)="onRepositoryChange(selectedRep)">  
+            <option [ngValue]="null">Select Repository</option>  
+          <option *ngFor="let rep of rep_list">{{rep}}</option>
+        </select>  
+      </div>
+      <div class="col-sm-9">     
+          Active Repository: <input type="text" readonly class="form-control-plaintext"  value={{active_rep}}>  
+        </div>
+      </div>
+      <hr>
+      <hr>
+      <div class="row top-buffer-large"> 
+          <h4>
+              <dt>
+            GraphDB-Repository: Create new Repository
+              </dt>      
+            </h4>
+          </div>
+      <div class="row"> 
+        <div class="col-sm"> 
+          Please provide the name for the new repository: <input type="text" [(ngModel)]="RepName">
+        </div>
+          <div class="col-sm-7"> 
+            <button class="btn btn-success" (click)="createNewRepository(RepName)">
+              Create Repository
+            </button>
+          </div>
+        </div>
+        <hr>
+        <hr>
+        <div class="row top-buffer-large"> 
+            <h4>
+                <dt>
+              GraphDB-Repository: Clearing
+                </dt>      
+              </h4>
+            </div>
+      <div class="row">
+          <div class="col-sm">
+        <button class="btn btn-danger" matTooltipPosition="after" matTooltip="The submitted ontology statements get stored in the default graph. After clearing the default graph you can restart building the ontology pool." (click)="clearDefaultGraph()">Clear Default Graph </button>
+      </div> 
+        <div class="col-sm-9">
+        <button class="btn btn-danger" matTooltipPosition="after" matTooltip="By clearing the repository all triples get deleted." (click)="clearRepository()">Clear Active Repository </button>
+      </div> 
+      </div>
+      <hr>
+      <hr>
+      <div class="row top-buffer-large">          
+          <h4>
+              <dt>
+            GraphDB-Repository: Submit Ontologies
+              </dt>      
+            </h4>
+          </div>
+      <div class="row">
+          <button class="btn btn-warning" matTooltipPosition="after" matTooltip="After the active repository gets cleared, this ontology should always be imported first to store the formulated CQs adequately." (click)="importCQStorageOntology()">
+            Import CQ-Storage-Ontology
+          </button>
+        </div>
+      <!-- <div class="row">
+          <div>
+              <br><br><h5>Choose File</h5>
+              <form (ngSubmit)="onSubmit()">
+                  <div class="form-group">
+                      <input type="file" name="ontology-file" (change)="fileProgress($event)" />
+                  </div>
+                  <div class="form-group">
+                      <button class="btn btn-primary">Submit</button>
+                  </div>
+              </form>
+          </div>
+      </div> -->
+
+     
+
+  <div class="row top-buffer"> Insert URL of Ontology-File and confirm with [Enter], to submit the ontology to the repository.</div>   
+  <div class="row"> <input #box1 (keyup.enter)="onEnterOntologyImport(box1.value)"> </div>  
+    <div class="row">
+        <div class="col-sm">
+            <div class="row top-buffer">The following Smart-Grid-specific ontologies can be uploaded to the repository:</div>
+            <div> <input [disabled]="energyuse_disabled" type="checkbox" [(ngModel)]="energyuse" (change)="value_changed()">  EnergyUse </div>
+            <div> <input [disabled]="saref_disabled" type="checkbox" [(ngModel)]="saref" (change)="value_changed()">  SAREF </div>
+            <div> <input [disabled]="saref4ee_disabled" type="checkbox" [(ngModel)]="saref4ee" (change)="value_changed()">  SAREF4EE </div>
+            <div> <input [disabled]="semanco_disabled" type="checkbox" [(ngModel)]="semanco" (change)="value_changed()">  SEMANCO </div>
+            <div> <input [disabled]="sewoa_disabled" type="checkbox" [(ngModel)]="sewoa" (change)="value_changed()"> SeWoA: </div>
+        </div> 
+    <div class="col-sm">
+      <div class="row top-buffer">The following generic ontologies can be uploaded to the repository:</div>
+          <div> <input [disabled]="geosparql_disabled"type="checkbox" [(ngModel)]="geosparql" (change)="value_changed()">  GeoSPARQL </div>
+          <div> <input [disabled]="om2_disabled" type="checkbox" [(ngModel)]="om2" (change)="value_changed()">  OM2 </div>
+          <div> <input [disabled]="provo_disabled"type="checkbox" [(ngModel)]="provo" (change)="value_changed()">  W3C PROV-O </div>
+          <div> <input [disabled]="time_disabled" type="checkbox" [(ngModel)]="time" (change)="value_changed()"> W3C Time </div>
+    </div> 
+  </div>
+
+<div class="row top-buffer-large"> 
+    <h4>
+        <dt>
+      Information about existing ontologies
+        </dt>      
+      </h4>
+    </div>
+    <div class="row top-buffer"> 
+<table class="table">        
+    <thead>
+        <tr>
+            <th>Ontology Name</th>
+            <th>Domain</th>   
+            <th>Purpose</th>   
+            <th>Concepts</th> 
+            <th>Additional Links</th>                            
+        </tr>
+    </thead>
+    <tbody>
+    <tr class="rowhighlight">
+    <td>BOnSAI</td>
+    <td>- Building Energy Management<br>
+          - Ambient Intelligence</td>
+    <td>- Ambient Intelligence in large-scale service-oriented pervasive systems<br>
+      - service interoperability</td>
+    <td>- hardware: appliances & devices<br>
+        - context: location, enviromental parameter, power, time<br>
+        - communication protocol                                      
+        </td>
+    <td> <a href="http://lpis.csd.auth.gr/ontologies/ontolist.html#bonsai"> Ontology Website </a><br>
+      <a href="https://github.com/Jannis94102/Ontology-Selection-Tool/blob/master/scientific papers/BoNSAI.pdf"> Paper </a></td>
+  </tr>
+  <tr class="rowhighlight">
+      <td>EnergyUse</td>                  
+      <td>Home Energy Management Systems</td>
+      <td>- EU-ontology is the base for a collaborative web platform, which enables users to view and compare the electricity consumption of their entire households, or of specific devices and appliances <br>
+        - use of EU-ontology mainly for linked open data publishing for third party tools</td>
+      <td>- home user profiles, home appliances, sensors and actuators<br>
+          - energy consumption measures and energy related discussion data (communities, comparable to social networks -> posts, upvotes etc.)
+        </td>
+      <td> <a href="https://github.com/evhart/energyuse"> Github-Repository </a><br>
+        <a href="https://github.com/Jannis94102/Ontology-Selection-Tool/blob/master/scientific papers/Burel%2C%20Piccolo%2C%20Alani%20-%202016%20-%20EnergyUse%20-%20A%20Collective%20Semantic%20Platform%20for%20Monitoring%20and%20Discussing%20Energy%20Consumption-annotated.pdf"> Paper </a></td>
+    </tr>
+    <tr class="rowhighlight">
+        <td>GeoSPARQL</td>                  
+        <td>Provenance</td>
+        <td>- representing (RDF) and querying (extension to the SPARQL query language) geospatial data on the Semantic Web<br>
+        - accommodate systems based on qualitative spatial reasoning and systems based on quantitative spatial computations
+    </td>
+        <td>- SpatialObject, spatial relations, geometry, coordinates
+          </td>
+        <td> <a href="https://www.opengeospatial.org/standards/geosparql"> Ontology Website</a><br>
+          <a href="https://github.com/Jannis94102/Ontology-Selection-Tool/blob/master/scientific papers/11-052r4_OGC_GeoSPARQL_-_A_Geographic_Query_Language_for_RDF_Data.pdf"> Paper </a></td>
+      </tr>
+      <tr class="rowhighlight">
+          <td>OM 2: Units of Measure</td>
+          <td>Units & Measurements</td>
+          <td>models concepts and relations important to scientific research with a strong focus on units, quantities, measurements, and dimensions</td>
+          <td>quantities, units, system of units, application areas, dimension, conversion, prefix (binary / SI)</td>
+          <td> <a href="http://www.foodvoc.org/page/om-2"> Ontology Website </a>
+          </td> 
+        </tr>
+    <tr class="rowhighlight">
+        <td>ProSGV3</td>
+        <td>Prosumer</td>
+        <td>use this ontology as the knowledge base of Energy Management Systems (EMS) focused on improving Smart Grid DR and sustainability by predicting Smart Grid energy consumption and production</td>
+        <td>home appliances, power production components, power storage components, weather related information, power distribution network, infrastructure type of various entities and contractual agreement between prosumers</td>
+        <td> <a href="http://data-satin.telecom-st-etienne.fr/ontologies/smartgrids/proSGV3/ProSG.html"> Ontology Website </a><br>
+          <a href="https://github.com/Jannis94102/Ontology-Selection-Tool/blob/master/scientific papers/A%20Generic%20Ontology%20for%20Prosumer-Oriented%20Smart%20Grid.pdf"> Paper </a></td>
+      </tr>
+      <tr class="rowhighlight">
+          <td>SAREF & SAREF4EE</td>
+          <td>Smart Appliances <br> Smart Grid DR</td>
+          <td>- to improve interoperability among electrical appliances of different manufacturers (especially between  EEBus and E@H devices)<br>
+            - annotate a neutral (protocol-independent) set of messages to be directly adopted by the various manufactures, or mapped to their domain specific solutions of choice</td>
+          <td>- home appliances, sensors, actuators and meters<br>
+              - device function & state<br>
+              - building spaces (incl. geo-location)<br>
+              - profiles: production and consumption data, associated costs<br>
+              - units of measure<br>
+              - configuration, schedule, monitor & control and event-based information                  
+              </td>
+          <td> <a href="http://ontology.tno.nl/saref4ee/"> SAREF4EE Website </a><br>
+            <a href="http://ontology.tno.nl/saref/"> SAREF Website </a><br>
+            <a href="https://github.com/Jannis94102/Ontology-Selection-Tool/blob/master/scientific%20papers/Daniele2015_Chapter_CreatedInCloseInteractionWithT.pdf">SAREF Paper</a><br>
+            <a href="https://github.com/Jannis94102/Ontology-Selection-Tool/blob/master/scientific papers/SAREF4EE_Documentation_v0.1.pdf"> SAREF4EE Paper </a></td>
+        </tr>
+        <tr class="rowhighlight">
+            <td>SEMANCO</td>
+            <td>Urban Energy Management</td>
+            <td>- creating the SEIF (Semantic Energy Information Framework) as a semantic framework to support decision making in energy efficient urban planning <br>
+              - bridge between heterogenous datasources and the tools which use the semantically modelled data</td>
+            <td>- regions, cities, neighbourhoods and buildings <br>
+                - building energy consumption data, associated energy performance indicators (i.e., energy savings, energy costs, etc.) and timestamps, consumed energy sources, building features, building equipment features and services<br>
+                - external factors such as weather conditions, building geographical location, demographic, environmental and socio-economic concepts</td>
+            <td> <a href="http://semanco-project.eu/"> Project Website </a><br>
+              <a href="https://github.com/Jannis94102/Ontology-Selection-Tool/blob/master/scientific papers/ecppm_workshop_semanco.pdf"> Paper </a></td>
+          </tr>
+        <tr class="rowhighlight">
+          <td>SeWoA</td>
+          <td>Gebäudeautomatisierung</td>
+          <td>holistic knowledge base for buildings providing views on static building and automation systems configuration as well as runtime information,  e.g.
+            sensor values, setpoints, calculated or aggregated values as well as time series of historical values</td>
+          <td>- building and its technical equipment (geometry, building physics, network topologies and devices)  <br>
+           - runtime information: sensor values, setpoints, calculated or aggregated values as well as time series of historical values
+          </td>
+          <td> <a href="https://github.com/Jannis94102/Ontology-Selection-Tool/blob/master/scientific papers/SeWoA.pdf"> Paper</a></td>
+        </tr> 
+        <tr class="rowhighlight">
+            <td>W3C PROV-O</td>
+            <td>Provenance</td>
+            <td>- represent and interchange provenance information generated in different systems and under different contexts<br>
+              - expected to be both directly usable in applications as well as serve as a reference model for creating domain-specific provenance ontologies</td>
+            <td>- Agent, Entity, Activity, Location            
+            </td>
+            <td> <a href="https://www.w3.org/TR/prov-o/">Ontology Website</a></td>
+          </tr> 
+        <tr class="rowhighlight">
+            <td>W3C Time</td>
+            <td>Time</td>
+            <td>- describing the temporal properties of any resource <br>
+               - focus on temporal ordering relationships</td>
+            <td>- date-time information, duration, time instants & intervals
+            </td>
+            <td> <a href="https://www.w3.org/TR/owl-time/"> Ontoloygy Website</a></td>
+          </tr>    
+               
+      </tbody>        
+  </table>
+
+</div>
+  
