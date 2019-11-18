@@ -336,13 +336,13 @@ clearDefaultGraph(){
 
           url: `/repositories/${repository_dummy}/rdf-graphs/service?default`
         }
-
         Axios(config).then(function (response) {
-          console.log("Got a response from GraphDB " + response.status);
-          resolve(response);
+          if (response.status==204){
+            alert("Löschen erfolgreich!")}
         })
-
-
+        .catch(function (error) {
+            alert(error)
+          });
       });
       return promise
 }
@@ -357,13 +357,13 @@ clearRepository(){
 
           url: `/repositories/${repository_dummy}/statements`
         }
-
         Axios(config).then(function (response) {
-          console.log("Got a response from GraphDB " + response.status);
-          resolve(response);
+          if (response.status==204){
+            alert("Löschen erfolgreich!")}
         })
-
-
+        .catch(function (error) {
+            alert(error)
+          });
       });
       return promise
 }
@@ -492,8 +492,8 @@ alert("Repository wurde erfolgreich angelegt.")
                     }
 
                     Axios(config_post).then(function (response) {
-                        console.log("Got a response from GraphDB ");
-                        console.log(response.status);
+                        // console.log("Got a response from GraphDB ");
+                        // console.log(response.status);
                         if (response.status==204){
                             alert("Import erfolgreich!")
                         }
