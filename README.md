@@ -45,4 +45,4 @@ aus. Nun kann die Benutzeroberfläche des Tools in Ihrem Browser unter der Adres
 
 ## License
 
-[MIT](https://raw.githubusercontent.com/Jannis94102/Ontology-Selection-Tool/master/Tool%20Source%20Code/LICENSE)
+[MIT](https://raw.githubusercontent.com/Jannis94102/Ontology-Selection-Tool/master/LICENSE)
