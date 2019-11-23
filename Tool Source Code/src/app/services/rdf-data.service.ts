@@ -159,7 +159,7 @@ custom_concept_graph = `<http://localhost:7200/repositories/${this.repository}/r
                 ${add_class2}
             }
         }` ;
-console.log(selectString)
+
         return this.selectList2(selectString);
     }
     insert_data_CQ2(DD1_sel: string, counter:number, add_class:string) {
@@ -222,14 +222,14 @@ GRAPH <http://localhost:7200/repositories/${this.repository}/rdf-graphs/cq_store
             {
             GRAPH <http://localhost:7200/repositories/${this.repository}/rdf-graphs/cq_store> {
                 cqstore:cqt4_${counter} rdf:type cqstore:FormalCompetencyQuestion_Type4 .
-                cqstore:cqt4_${counter} cqstore:hasCE1 cqstore:cq4_ce_${counter}  .
-                cqstore:cq4_ce_${counter} rdf:type cqstore:CE .
+                cqstore:cqt4_${counter} cqstore:hasCE1 cqstore:cq4_ce1_${counter}  .
+                cqstore:cq4_ce1_${counter} rdf:type cqstore:CE .
                 cqstore:cqt4_${counter} cqstore:hasOPE cqstore:cq4_ope_${counter} .
                 cqstore:cq4_ope_${counter} rdf:type cqstore:OPE .
                 cqstore:cqt4_${counter} cqstore:hasCE2 cqstore:cq4_ce2_${counter} .
                 cqstore:cq4_ce2_${counter} rdf:type cqstore:CE .
-                cqstore:cq4_ce_${counter} cqstore:hasConceptName "${res1[1]}"^^xsd:string .
-                cqstore:cq4_ce_${counter} cqstore:hasIRI "${this.iri1}"^^xsd:string .
+                cqstore:cq4_ce1_${counter} cqstore:hasConceptName "${res1[1]}"^^xsd:string .
+                cqstore:cq4_ce1_${counter} cqstore:hasIRI "${this.iri1}"^^xsd:string .
                 cqstore:cq4_ope_${counter} cqstore:hasConceptName "${res2[1]}"^^xsd:string .
                 cqstore:cq4_ope_${counter} cqstore:hasIRI "${this.iri2}"^^xsd:string .
                 cqstore:cq4_ce2_${counter} cqstore:hasConceptName "${res3[1]}"^^xsd:string .
